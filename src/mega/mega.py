@@ -824,8 +824,8 @@ class Mega:
                                                 data=chunk,
                                                 timeout=self.timeout)
                     completion_file_handle = output_file.text
-                    logger.info('%s of %s uploaded', upload_progress,
-                                file_size)
+                    logger.info('%s of %s uploaded', format_bytes(upload_progress),
+                                format_bytes(file_size))
             else:
                 output_file = requests.post(ul_url + "/0",
                                             data='',
@@ -1082,3 +1082,12 @@ class Mega:
                 'k': encrypted_key
             }]
         })
+
+def format_bytes(size):
+    power = 2 ** 10
+    n = 0
+    power_labels = {0: '', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
+    while size > power:
+        size /= power
+        n += 1
+    return str(round(size, 2)) + " " + power_labels[n] + 'B'
