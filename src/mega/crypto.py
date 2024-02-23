@@ -154,15 +154,15 @@ def a32_to_base64(a):
 
 
 # generates a list of chunks of the kind (offset, chunk_size), where offset refers to the file start
-# chunk_size starts at 0x20000 (100 KiB), and then increments linearly till saturation to 0x100000 (1 MiB)
+# chunk_size starts at 0x200000 (1000 KiB), and then increments linearly till saturation to 0x10000000 (100 MiB)
 def get_chunks(size):
     p = 0
-    s = 0x20000
+    s = 0x200000
     while p + s < size:
         yield (p, s)
         p += s
-        if s < 0x100000:
-            s += 0x20000
+        if s < 0x10000000:
+            s += 0x200000
     yield (p, size - p)
 
 
